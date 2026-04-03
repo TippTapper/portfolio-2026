@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Din Investeringsplan — April 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #080c14;
+  --surface:   #0f1624;
+  --surface2:  #0d1828;
+  --border:    #1e2d45;
+  --border2:   #243452;
+  --text:      #e2e8f0;
+  --muted:     #64748b;
+  --dim:       #334155;
+  --green:     #22c55e;
+  --green-bg:  #052e16;
+  --green-mid: #14532d;
+  --red:       #ef4444;
+  --red-bg:    #1c0505;
+  --red-mid:   #450a0a;
+  --amber:     #f59e0b;
+  --amber-bg:  #1c0e00;
+  --amber-mid: #451a03;
+  --blue:      #60a5fa;
+  --blue-bg:   #0a1628;
+  --blue-mid:  #1e3a5f;
+  --purple:    #a855f7;
+  --cyan:      #22d3ee;
+  --gold:      #fbbf24;
+  --slate:     #94a3b8;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Syne',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(96,165,250,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(96,165,250,.025) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;z-index:0;
+}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 20px 100px}
+.mono{font-family:'DM Mono',monospace}
+
+/* ALERT */
+.alert{
+  background:linear-gradient(90deg,#3f0000,#7f1d1d 40%,#7f1d1d 60%,#3f0000);
+  border-bottom:1px solid #dc2626;
+  padding:11px 20px;
+  display:flex;align-items:center;gap:12px;
+  animation:alertPulse 2.5s ease-in-out infinite;
+  position:relative;overflow:hidden;
+}
+.alert::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.03),transparent);
+  animation:alertSweep 3s linear infinite;
+}
+@keyframes alertPulse{0%,100%{opacity:1}50%{opacity:.82}}
+@keyframes alertSweep{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.alert-icon{font-size:16px;flex-shrink:0;animation:alertBlink 1s step-end infinite}
+@keyframes alertBlink{0%,100%{opacity:1}50%{opacity:0}}
+.alert strong{color:#fca5a5;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;flex-shrink:0}
+.alert span{color:#fecaca;font-size:12px;line-height:1.4}
+
+/* HEADER */
+.header{padding:52px 0 38px;border-bottom:1px solid var(--border);margin-bottom:44px}
+.header-eyebrow{
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;
+  color:var(--amber);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.header-eyebrow::before{content:'';width:24px;height:1px;background:var(--amber);display:inline-block}
+.header h1{
+  font-size:clamp(30px,5vw,54px);font-weight:800;
+  line-height:1.04;letter-spacing:-.025em;color:#fff;
+}
+.header h1 em{color:var(--amber);font-style:normal}
+.header-meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{
+  background:var(--surface);border:1px solid var(--border);
+  padding:4px 13px;border-radius:4px;
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--slate);
+  letter-spacing:.03em;
+}
+
+/* SECTION TITLE */
+.stitle{
+  font-size:10px;font-family:'DM Mono',monospace;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:20px;display:flex;align-items:center;gap:12px;
+}
+.stitle::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* MACRO GRID */
+.macro-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:11px;margin-bottom:52px}
+.mc{
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:17px 15px;position:relative;overflow:hidden;
+  transition:border-color .2s,transform .2s;
+  animation:fadeUp .5s both;
+}
+.mc:hover{transform:translateY(-2px);border-color:var(--border2)}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.mc.r::before{background:var(--red)}
+.mc.g::before{background:var(--green)}
+.mc.a::before{background:var(--amber)}
+.mc.b::before{background:var(--blue)}
+.mc-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:9px}
+.mc-val{font-family:'DM Mono',monospace;font-size:21px;font-weight:500;line-height:1}
+.mc.r .mc-val{color:#fca5a5}
+.mc.g .mc-val{color:#86efac}
+.mc.a .mc-val{color:#fcd34d}
+.mc.b .mc-val{color:#93c5fd}
+.mc-sub{font-size:10px;color:var(--muted);margin-top:5px;font-family:'DM Mono',monospace}
+.badge{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;letter-spacing:.04em;text-transform:uppercase;margin-top:9px}
+.br{background:var(--red-mid);color:#fca5a5;border:1px solid #7f1d1d}
+.bg{background:var(--green-mid);color:#86efac;border:1px solid #14532d}
+.ba{background:var(--amber-mid);color:#fcd34d;border:1px solid #78350f}
+.bb{background:var(--blue-mid);color:#93c5fd;border:1px solid #1e40af}
+
+/* REALITY CHECK */
+.scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:52px}
+@media(max-width:680px){.scenarios{grid-template-columns:1fr}}
+.scenario{
+  border-radius:10px;padding:26px 22px;position:relative;overflow:hidden;
+  animation:fadeUp .6s both;
+}
+.scenario::before{content:'';position:absolute;inset:0;opacity:.06}
+.scenario.s-green{background:linear-gradient(160deg,#0a2010,#052e16);border:1px solid #166534}
+.scenario.s-amber{background:linear-gradient(160deg,#1c1000,#1c0e00);border:1px solid #78350f}
+.scenario.s-red  {background:linear-gradient(160deg,#1c0505,#1c0505);border:1px solid #7f1d1d}
+.sc-prob{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.scenario.s-green .sc-prob{color:#4ade80}
+.scenario.s-amber .sc-prob{color:#fcd34d}
+.scenario.s-red   .sc-prob{color:#fca5a5}
+.sc-prob-pill{
+  font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;
+}
+.scenario.s-green .sc-prob-pill{background:#14532d;color:#86efac}
+.scenario.s-amber .sc-prob-pill{background:#451a03;color:#fcd34d}
+.scenario.s-red   .sc-prob-pill{background:#450a0a;color:#fca5a5}
+.sc-title{font-size:17px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em}
+.scenario.s-green .sc-title{color:#86efac}
+.scenario.s-amber .sc-title{color:#fcd34d}
+.scenario.s-red   .sc-title{color:#fca5a5}
+.sc-body{font-size:12px;color:var(--muted);line-height:1.75}
+.sc-body strong{font-family:'DM Mono',monospace}
+.scenario.s-green .sc-body strong{color:#86efac}
+.scenario.s-amber .sc-body strong{color:#fcd34d}
+.scenario.s-red   .sc-body strong{color:#fca5a5}
+.sc-result{
+  margin-top:16px;padding:10px 14px;border-radius:6px;
+  font-family:'DM Mono',monospace;font-size:12px;font-weight:500;
+}
+.scenario.s-green .sc-result{background:#052e16;color:#86efac;border:1px solid #166534}
+.scenario.s-amber .sc-result{background:#1c0e00;color:#fcd34d;border:1px solid #78350f}
+.scenario.s-red   .sc-result{background:#1c0505;color:#fca5a5;border:1px solid #7f1d1d}
+
+/* PORTFOLIO */
+.port-layout{display:grid;grid-template-columns:280px 1fr;gap:24px;margin-bottom:52px;align-items:start}
+@media(max-width:720px){.port-layout{grid-template-columns:1fr}}
+.donut-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:26px 22px;
+  display:flex;flex-direction:column;align-items:center;gap:18px;
+}
+.donut-wrap{position:relative;width:180px;height:180px}
+.donut-hole{
+  position:absolute;inset:36px;background:var(--surface);
+  border-radius:50%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;pointer-events:none;
+}
+.donut-total{font-family:'DM Mono',monospace;font-size:17px;font-weight:500;color:#fff;line-height:1}
+.donut-lbl{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.legend{width:100%}
+.li{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:11px;color:var(--slate);font-family:'DM Mono',monospace}
+.ld{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.ln{flex:1;font-size:11px}
+.lp{color:var(--text);font-size:12px}
+.positions{display:flex;flex-direction:column;gap:9px}
+.pc{
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  padding:13px 17px;display:grid;
+  grid-template-columns:10px 1fr auto;align-items:center;gap:14px;
+  transition:border-color .2s,background .2s;animation:fadeUp .5s both;
+}
+.pc:hover{background:#131d2e;border-color:var(--border2)}
+.pd{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.pn{font-size:13px;font-weight:600;color:#e2e8f0;line-height:1.2}
+.pd2{font-size:11px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace}
+.pp{font-family:'DM Mono',monospace;font-size:18px;font-weight:500;color:var(--text);text-align:right}
+.pk{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-align:right;margin-top:2px}
+.warn-row{
+  grid-column:2/-1;font-size:10px;color:var(--amber);
+  font-family:'DM Mono',monospace;display:flex;align-items:center;gap:4px;
+}
+
+/* TIMELINE */
+.tl-section{margin-bottom:52px}
+.tl-scroll{overflow-x:auto;padding-bottom:8px}
+.tl-track{
+  display:flex;gap:0;position:relative;
+  min-width:700px;
+  padding:0 0 4px;
+}
+.tl-line{
+  position:absolute;
+  top:15px;left:30px;right:30px;height:2px;
+  background:linear-gradient(90deg,var(--amber) 0%,var(--amber) 20%,var(--border) 20%);
+  z-index:0;
+}
+.tc{
+  flex:1;position:relative;z-index:1;
+  padding:0 8px;
+}
+.tc-dot-wrap{display:flex;justify-content:center;margin-bottom:18px}
+.tc-dot{
+  width:30px;height:30px;border-radius:50%;
+  border:2px solid var(--border2);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--muted);
+  transition:all .3s;
+}
+.tc.active .tc-dot{
+  background:var(--amber);border-color:var(--amber);color:#000;font-weight:700;
+  box-shadow:0 0 0 4px rgba(245,158,11,.15),0 0 16px rgba(245,158,11,.4);
+}
+.tc-inner{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:9px;padding:16px 14px;
+}
+.tc.active .tc-inner{border-color:var(--amber)}
+.tc-month{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.tc.active .tc-month{color:var(--amber)}
+.tc-amt{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;color:#fff;margin-bottom:12px;line-height:1}
+.tc.active .tc-amt{color:var(--gold)}
+.tc-items{list-style:none;display:flex;flex-direction:column;gap:5px}
+.tc-items li{font-size:11px;color:var(--muted);display:flex;align-items:flex-start;gap:5px;line-height:1.4}
+.tc-items li::before{content:'→';color:var(--dim);font-family:'DM Mono',monospace;font-size:10px;flex-shrink:0;padding-top:1px}
+.tc-note{font-size:10px;color:var(--blue);font-family:'DM Mono',monospace;margin-top:10px;font-style:italic}
+.tl-hint{text-align:center;font-size:11px;color:var(--dim);font-family:'DM Mono',monospace;margin-top:10px}
+
+/* THREE RISKS */
+.three-risks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:52px}
+@media(max-width:680px){.three-risks{grid-template-columns:1fr}}
+.risk3{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:24px 20px;position:relative;overflow:hidden;
+  animation:fadeUp .5s both;transition:border-color .2s;
+}
+.risk3:hover{border-color:var(--border2)}
+.risk3-num{
+  font-family:'DM Mono',monospace;font-size:48px;font-weight:500;
+  line-height:1;margin-bottom:16px;
+  background:linear-gradient(135deg,var(--red),#ff6b6b);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  opacity:.7;
+}
+.risk3-title{font-size:15px;font-weight:700;color:#fca5a5;margin-bottom:10px;line-height:1.25}
+.risk3-body{font-size:12px;color:var(--muted);line-height:1.75}
+.risk3-body strong{color:var(--text)}
+
+/* RISK BARS */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:11px;margin-bottom:52px}
+.rcard{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:15px 16px;animation:fadeUp .5s both;
+}
+.rname{font-size:12px;font-weight:600;margin-bottom:10px;color:var(--text)}
+.rtrack{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.rfill{height:100%;border-radius:3px;transition:width 1.2s cubic-bezier(.4,0,.2,1);width:0}
+.rfill.low{background:var(--green)}
+.rfill.mid{background:var(--amber)}
+.rfill.high{background:var(--red)}
+.rstats{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:10px}
+.rdown{color:var(--red)}.rtrig{color:var(--muted);font-size:9px}
+
+/* WORST CASE BANNER */
+.wc-banner{
+  background:#150404;border:1px solid #7f1d1d;border-radius:8px;
+  padding:18px 22px;margin-bottom:52px;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.wc-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.wc-label{font-size:11px;font-weight:700;color:#fca5a5;letter-spacing:.06em;text-transform:uppercase;margin-bottom:7px;font-family:'DM Mono',monospace}
+.wc-text{font-size:13px;color:#fecaca;line-height:1.65}
+.wc-text strong{color:#fff}
+.wc-text em{color:var(--slate)}
+
+/* MONTHLY */
+.monthly{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:28px;margin-bottom:52px;
+  display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;
+}
+@media(max-width:600px){.monthly{grid-template-columns:1fr}}
+.m-total{font-family:'DM Mono',monospace;font-size:44px;font-weight:500;color:var(--gold);line-height:1}
+.m-label{font-size:11px;color:var(--muted);margin-top:7px;letter-spacing:.06em;text-transform:uppercase;font-family:'DM Mono',monospace}
+.m-note{margin-top:14px;font-size:13px;color:var(--muted);line-height:1.7}
+.m-note span{color:var(--amber)}
+.m-split{display:flex;flex-direction:column;gap:11px}
+.ms{background:#0a1628;border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.ms-name{font-size:12px;font-weight:600;margin-bottom:4px}
+.ms-amt{font-family:'DM Mono',monospace;font-size:20px;color:var(--green)}
+.ms-note{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* RULES */
+.rules{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:11px;margin-bottom:52px}
+.rule{
+  background:var(--surface);border:1px solid var(--border);
+  border-left:3px solid var(--amber);border-radius:0 8px 8px 0;
+  padding:15px 17px;animation:fadeUp .5s both;
+}
+.rule-icon{font-size:19px;margin-bottom:8px}
+.rule-title{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:5px}
+.rule-desc{font-size:11px;color:var(--muted);line-height:1.65}
+.rule-desc strong{color:var(--text)}
+
+/* TABLE */
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:52px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead tr{background:var(--surface2);border-bottom:1px solid var(--border2)}
+th{
+  padding:11px 17px;text-align:left;
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);font-weight:500;
+}
+th:not(:first-child){text-align:right}
+th:last-child{text-align:left}
+td{padding:11px 17px;border-bottom:1px solid var(--border);vertical-align:middle}
+td:not(:first-child){text-align:right}
+td:last-child{text-align:left}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#0a1220}
+.tdot{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:9px;flex-shrink:0;vertical-align:middle}
+tfoot tr{background:var(--surface2);border-top:2px solid var(--border2)}
+tfoot td{font-weight:700;font-size:13px}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--border);padding-top:22px;font-size:11px;color:var(--dim);font-family:'DM Mono',monospace;line-height:2}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.mc:nth-child(1){animation-delay:.04s}.mc:nth-child(2){animation-delay:.08s}
+.mc:nth-child(3){animation-delay:.12s}.mc:nth-child(4){animation-delay:.16s}
+.mc:nth-child(5){animation-delay:.20s}.mc:nth-child(6){animation-delay:.24s}
+.mc:nth-child(7){animation-delay:.28s}
+.scenario:nth-child(1){animation-delay:.05s}
+.scenario:nth-child(2){animation-delay:.12s}
+.scenario:nth-child(3){animation-delay:.19s}
+.pc:nth-child(1){animation-delay:.04s}.pc:nth-child(2){animation-delay:.08s}
+.pc:nth-child(3){animation-delay:.12s}.pc:nth-child(4){animation-delay:.16s}
+.pc:nth-child(5){animation-delay:.20s}.pc:nth-child(6){animation-delay:.24s}
+.pc:nth-child(7){animation-delay:.28s}.pc:nth-child(8){animation-delay:.32s}
+.risk3:nth-child(1){animation-delay:.05s}
+.risk3:nth-child(2){animation-delay:.12s}
+.risk3:nth-child(3){animation-delay:.19s}
+.rcard:nth-child(1){animation-delay:.04s}.rcard:nth-child(2){animation-delay:.08s}
+.rcard:nth-child(3){animation-delay:.12s}.rcard:nth-child(4){animation-delay:.16s}
+.rcard:nth-child(5){animation-delay:.20s}.rcard:nth-child(6){animation-delay:.24s}
+.rcard:nth-child(7){animation-delay:.28s}.rcard:nth-child(8){animation-delay:.32s}
+</style>
+</head>
+<body>
+
+<!-- ░░░ ALERT ░░░ -->
+<div class="alert">
+  <span class="alert-icon">⚠</span>
+  <strong>Live-risk:</strong>
+  <span>Iran-krig dag 35 — Eldupphör oklart. Trump: "2–3 veckor till av attacker." Hormuzsundet blockerat. Recessionsrisk 49–60%. Uppdaterad analys nedan.</span>
+</div>
+
+<div class="wrap">
+
+<!-- ░░░ HEADER ░░░ -->
+<header class="header">
+  <div class="header-eyebrow">Portföljanalys · Marcus Lindqvist, Senior Strategist</div>
+  <h1>Din investerings<em>plan</em><br>April 2026</h1>
+  <div class="header-meta">
+    <span class="tag">50 000 kr startkapital</span>
+    <span class="tag">ISK · Avanza</span>
+    <span class="tag">Medel risk</span>
+    <span class="tag">Horisont: 3–5 år</span>
+    <span class="tag">Mål: 100 000 kr</span>
+    <span class="tag">Uppdaterad: 4 apr 2026</span>
+  </div>
+</header>
+
+<!-- ░░░ MACRO ░░░ -->
+<div class="stitle">Makroläget just nu</div>
+<div class="macro-grid">
+  <div class="mc r" style="animation-delay:.04s">
+    <div class="mc-label">Brent Råolja</div>
+    <div class="mc-val">$112</div>
+    <div class="mc-sub">↑ per fat</div>
+    <span class="badge br">+43% på 1 år</span>
+  </div>
+  <div class="mc a" style="animation-delay:.08s">
+    <div class="mc-label">Guld</div>
+    <div class="mc-val">$4 720</div>
+    <div class="mc-sub">↑ per troy oz</div>
+    <span class="badge ba">+48% på 1 år</span>
+  </div>
+  <div class="mc r" style="animation-delay:.12s">
+    <div class="mc-label">Recessionsrisk</div>
+    <div class="mc-val">49–60%</div>
+    <div class="mc-sub">↑ och stiger</div>
+    <span class="badge br">Moodys + BCA</span>
+  </div>
+  <div class="mc r" style="animation-delay:.16s">
+    <div class="mc-label">S&amp;P 500 YTD</div>
+    <div class="mc-val">−8%</div>
+    <div class="mc-sub">↓ sedan jan</div>
+    <span class="badge br">Korrektion</span>
+  </div>
+  <div class="mc b" style="animation-delay:.20s">
+    <div class="mc-label">Fed ränta</div>
+    <div class="mc-val">3.75%</div>
+    <div class="mc-sub">→ Håller</div>
+    <span class="badge bb">1 sänkning 2026</span>
+  </div>
+  <div class="mc b" style="animation-delay:.24s">
+    <div class="mc-label">Riksbank</div>
+    <div class="mc-val">1.75%</div>
+    <div class="mc-sub">→ Håller</div>
+    <span class="badge bb">Avvaktar Iran</span>
+  </div>
+  <div class="mc a" style="animation-delay:.28s">
+    <div class="mc-label">US Tullar</div>
+    <div class="mc-val">11%</div>
+    <div class="mc-sub">↑ genomsnitt</div>
+    <span class="badge ba">Högst sen 1943</span>
+  </div>
+</div>
+
+<!-- ░░░ REALITY CHECK ░░░ -->
+<div class="stitle">Tre ärliga scenarion — ingen av dessa är "säker"</div>
+<div class="scenarios">
+  <div class="scenario s-green">
+    <div class="sc-prob">Basfall <span class="sc-prob-pill">40%</span></div>
+    <div class="sc-title">Kriget löses, recession undviks</div>
+    <div class="sc-body">
+      Fredsavtal inom 3–6 månader. Hormuzsundet öppnas. Olja faller till $75–90. Ekonomin studsar tillbaka. AI-boomen fortsätter driva vinsttillväxt.<br><br>
+      <strong>Din portfölj: +8–15%/år.</strong>
+    </div>
+    <div class="sc-result">★ Når 100 000 kr på 3–5 år</div>
+  </div>
+  <div class="scenario s-amber">
+    <div class="sc-prob">Trög återhämtning <span class="sc-prob-pill">35%</span></div>
+    <div class="sc-title">Mild recession, lång väg tillbaka</div>
+    <div class="sc-body">
+      Kriget drar ut. Mild recession, inflation biter sig fast. Fed tvingas hålla räntan högt. Börsen rör sig sidled i 1–2 år innan återhämtning.<br><br>
+      <strong>Din portfölj: −15–25% år 1.</strong>
+    </div>
+    <div class="sc-result">→ Når 100 000 kr på 5–7 år</div>
+  </div>
+  <div class="scenario s-red">
+    <div class="sc-prob">Svart scenario <span class="sc-prob-pill">25%</span></div>
+    <div class="sc-title">Eskalering, djup recession</div>
+    <div class="sc-body">
+      Iran stänger Hormuz helt. Ryssland väljer sida. Olja till $150–200. Global stagflation som 1973–74. Djup recession, börsen kollapsar.<br><br>
+      <strong>Din portfölj: −30–40% på 12–18 mån.</strong>
+    </div>
+    <div class="sc-result">✕ Tar 4–6 år att återhämta sig</div>
+  </div>
+</div>
+
+<!-- ░░░ PORTFOLIO ░░░ -->
+<div class="stitle">Portföljfördelning — 50 000 kr</div>
+<div class="port-layout">
+  <div class="donut-card">
+    <div class="donut-wrap">
+      <svg viewBox="0 0 180 180" width="180" height="180">
+        <circle cx="90" cy="90" r="72" fill="none" stroke="#22c55e" stroke-width="22"
+          stroke-dasharray="135.72 316.67" stroke-dashoffset="0" transform="rotate(-90 90 90)"/>
+        <circle cx="90" cy="90" r="72" fill="none" stroke="#ef4444" stroke-width="22"
+          stroke-dasharray="67.86 384.54" stroke-dashoffset="-135.72" transform="rotate(-90 90 90)"/>
+        <circle cx="90" cy="90" r="72" fill="none" stroke="#60a5fa" stroke-width="22"
+          stroke-dasharray="54.29 398.11" stroke-dashoffset="-203.58" transform="rotate(-90 90 90)"/>
+        <circle cx="90" cy="90" r="72" fill="none" stroke="#f59e0b" stroke-width="22"
+          stroke-dasharray="45.24 407.15" stroke-dashoffset="-257.87" transform="rotate(-90 90 90)"/>
+        <circle cx="90" cy="90" r="72" fill="none" stroke="#a855f7" stroke-width="22"
+          stroke-dasharray="45.24 407.15" stroke-dashoffset="-303.11" transform="rotate(-90 90 90)"/>
+        <circle cx="90" cy="90" r="72" fill="none" stroke="#fbbf24" stroke-width="22"
+          stroke-dasharray="36.19 416.20" stroke-dashoffset="-348.35" transform="rotate(-90 90 90)"/>
+        <circle cx="90" cy="90" r="72" fill="none" stroke="#22d3ee" stroke-width="22"
+          stroke-dasharray="22.62 429.78" stroke-dashoffset="-384.54" transform="rotate(-90 90 90)"/>
+        <circle cx="90" cy="90" r="72" fill="none" stroke="#64748b" stroke-width="22"
+          stroke-dasharray="45.24 407.15" stroke-dashoffset="-407.15" transform="rotate(-90 90 90)"/>
+      </svg>
+      <div class="donut-hole">
+        <div class="donut-total">50 000</div>
+        <div class="donut-lbl">kr totalt</div>
+      </div>
+    </div>
+    <div class="legend">
+      <div class="li"><span class="ld" style="background:#22c55e"></span><span class="ln">Avanza Global</span><span class="lp">30%</span></div>
+      <div class="li"><span class="ld" style="background:#ef4444"></span><span class="ln">Energi (IOGP)</span><span class="lp">15%</span></div>
+      <div class="li"><span class="ld" style="background:#60a5fa"></span><span class="ln">Försvar (NATO)</span><span class="lp">12%</span></div>
+      <div class="li"><span class="ld" style="background:#f59e0b"></span><span class="ln">Avanza Zero</span><span class="lp">10%</span></div>
+      <div class="li"><span class="ld" style="background:#a855f7"></span><span class="ln">Hälsovård (HEAL)</span><span class="lp">10%</span></div>
+      <div class="li"><span class="ld" style="background:#fbbf24"></span><span class="ln">Guld (IGLN)</span><span class="lp">8%</span></div>
+      <div class="li"><span class="ld" style="background:#22d3ee"></span><span class="ln">EM ex-Kina</span><span class="lp">5%</span></div>
+      <div class="li"><span class="ld" style="background:#64748b"></span><span class="ln">Sparkonto+ (Cash)</span><span class="lp">10%</span></div>
+    </div>
+  </div>
+
+  <div class="positions">
+    <div class="pc">
+      <div class="pd" style="background:#22c55e"></div>
+      <div><div class="pn">Avanza Global</div><div class="pd2">Global indexfond · MSCI World · lägst avgift</div></div>
+      <div><div class="pp">30%</div><div class="pk">15 000 kr</div></div>
+    </div>
+    <div class="pc">
+      <div class="pd" style="background:#ef4444"></div>
+      <div><div class="pn">iShares IOGP — Energi ETF</div><div class="pd2">Olja &amp; gas · Brent $112 · Equinor-exponering</div></div>
+      <div><div class="pp">15%</div><div class="pk">7 500 kr</div></div>
+    </div>
+    <div class="pc">
+      <div class="pd" style="background:#60a5fa"></div>
+      <div><div class="pn">HANetf NATO — Försvar ETF</div><div class="pd2">Ombeväpningscykel · 5–10 år strukturell trend</div></div>
+      <div><div class="pp">12%</div><div class="pk">6 000 kr</div></div>
+    </div>
+    <div class="pc">
+      <div class="pd" style="background:#f59e0b"></div>
+      <div><div class="pn">Avanza Zero — Sverige</div><div class="pd2">OMX Stockholm 30 · 0% avgift · helt gratis</div></div>
+      <div><div class="pp">10%</div><div class="pk">5 000 kr</div></div>
+    </div>
+    <div class="pc">
+      <div class="pd" style="background:#a855f7"></div>
+      <div><div class="pn">iShares HEAL — Hälsovård ETF</div><div class="pd2">Defensivt · klarar inflation · demografisk medvind</div></div>
+      <div><div class="pp">10%</div><div class="pk">5 000 kr</div></div>
+    </div>
+    <div class="pc">
+      <div class="pd" style="background:#fbbf24"></div>
+      <div>
+        <div class="pn">iShares IGLN — Guld ETC</div>
+        <div class="pd2">Säker hamn · Iran-krig driver efterfrågan</div>
+        <div class="warn-row">⚠ Dyrt entry — $4 720/oz är nära ATH. Begränsad uppgångspotential.</div>
+      </div>
+      <div><div class="pp">8%</div><div class="pk">4 000 kr</div></div>
+    </div>
+    <div class="pc">
+      <div class="pd" style="background:#22d3ee"></div>
+      <div><div class="pn">Amundi EM ex-Kina ETF</div><div class="pd2">Indien, Brasilien, SA · råvaruexportörer gynnas</div></div>
+      <div><div class="pp">5%</div><div class="pk">2 500 kr</div></div>
+    </div>
+    <div class="pc">
+      <div class="pd" style="background:#64748b"></div>
+      <div><div class="pn">Sparkonto+ — Krigskassa</div><div class="pd2">Håll pulver torrt · köp mer vid vapenstillestånd</div></div>
+      <div><div class="pp">10%</div><div class="pk">5 000 kr</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ TIMELINE ░░░ -->
+<div class="stitle">Köpstrategi — 5 trancher över 10 månader</div>
+<div class="tl-section">
+  <div class="tl-scroll">
+    <div class="tl-track">
+      <div class="tl-line"></div>
+      <!-- T1 -->
+      <div class="tc active">
+        <div class="tc-dot-wrap"><div class="tc-dot">1</div></div>
+        <div class="tc-inner">
+          <div class="tc-month">April 2026 · NU</div>
+          <div class="tc-amt">10 000 kr</div>
+          <ul class="tc-items">
+            <li>5 000 kr · Avanza Global</li>
+            <li>5 000 kr · Sparkonto+</li>
+          </ul>
+          <div class="tc-note">★ Starta försiktigt. Kriget är öppet.</div>
+        </div>
+      </div>
+      <!-- T2 -->
+      <div class="tc">
+        <div class="tc-dot-wrap"><div class="tc-dot">2</div></div>
+        <div class="tc-inner">
+          <div class="tc-month">Maj 2026</div>
+          <div class="tc-amt">8 000 kr</div>
+          <ul class="tc-items">
+            <li>4 000 kr · Energi IOGP</li>
+            <li>4 000 kr · Försvar NATO</li>
+          </ul>
+        </div>
+      </div>
+      <!-- T3 -->
+      <div class="tc">
+        <div class="tc-dot-wrap"><div class="tc-dot">3</div></div>
+        <div class="tc-inner">
+          <div class="tc-month">Juni 2026</div>
+          <div class="tc-amt">8 000 kr</div>
+          <ul class="tc-items">
+            <li>3 000 kr · Avanza Zero</li>
+            <li>5 000 kr · Hälsovård HEAL</li>
+          </ul>
+        </div>
+      </div>
+      <!-- T4 -->
+      <div class="tc">
+        <div class="tc-dot-wrap"><div class="tc-dot">4</div></div>
+        <div class="tc-inner">
+          <div class="tc-month">Augusti 2026</div>
+          <div class="tc-amt">12 000 kr</div>
+          <ul class="tc-items">
+            <li>5 500 kr · Avanza Global</li>
+            <li>4 000 kr · Guld IGLN</li>
+            <li>2 500 kr · EM ex-Kina</li>
+          </ul>
+        </div>
+      </div>
+      <!-- T5 -->
+      <div class="tc">
+        <div class="tc-dot-wrap"><div class="tc-dot">5</div></div>
+        <div class="tc-inner">
+          <div class="tc-month">Oktober 2026</div>
+          <div class="tc-amt">12 000 kr</div>
+          <ul class="tc-items">
+            <li>Fyll på det som fallit mest</li>
+            <li>Omvärdera läget</li>
+          </ul>
+          <div class="tc-note">↻ Flexibel — anpassa efter kriget</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tl-hint">← Scrolla om skärmen är smal →</div>
+</div>
+
+<!-- ░░░ THREE RISKS ░░░ -->
+<div class="stitle">3 risker ingen pratar om tillräckligt</div>
+<div class="three-risks">
+  <div class="risk3">
+    <div class="risk3-num">01</div>
+    <div class="risk3-title">Du säljer i panik</div>
+    <div class="risk3-body">
+      Den <strong>största risken är du — inte marknaden.</strong> Om portföljen är ned 20 000 kr på 6 månader är frestelsen enorm att sälja allt och "rädda vad som räddas kan." Det är fel val varje gång.<br><br>
+      Säljer du i botten låser du förlusten permanent. De som höll kvar under 2008 var helåterställda inom 4 år. De som sålde var inte det.
+    </div>
+  </div>
+  <div class="risk3">
+    <div class="risk3-num">02</div>
+    <div class="risk3-title">Du behöver pengarna tidigare</div>
+    <div class="risk3-body">
+      Är dessa <strong>50 000 kr verkligen orörliga i 3–5 år?</strong> Om svaret är "kanske" — investera 30 000 kr istället och behåll 20 000 kr på sparkonto.<br><br>
+      Det värsta som kan hända är att du tvingas sälja vid sämsta tillfälle för att du behöver pengar till något oförutsett.
+    </div>
+  </div>
+  <div class="risk3">
+    <div class="risk3-num">03</div>
+    <div class="risk3-title">Kriget eskalerar till regionkrig</div>
+    <div class="risk3-body">
+      <strong>25% sannolikhet.</strong> Inte basfall — men inte osannolikt. Om Iran stänger Hormuz helt, Saudiarabien dras in, eller Ryssland väljer sida aktivt, pratar vi om olja på $150–200 och global stagflation à la 1973.<br><br>
+      Din portfölj klarar detta bättre än de flesta tack vare energi- och försvarspositionerna — men det gör fortfarande ont.
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ RISK BARS ░░░ -->
+<div class="stitle">Riskanalys per position</div>
+<div class="risk-grid">
+  <div class="rcard"><div class="rname">Avanza Global</div><div class="rtrack"><div class="rfill mid" data-width="55"></div></div><div class="rstats"><span class="rdown">−25 till −35%</span><span class="rtrig">Risk: AI-bubbla</span></div></div>
+  <div class="rcard"><div class="rname">Energi (IOGP)</div><div class="rtrack"><div class="rfill high" data-width="75"></div></div><div class="rstats"><span class="rdown">−20 till −35%</span><span class="rtrig">Trigger: Fredsavtal</span></div></div>
+  <div class="rcard"><div class="rname">Försvar (NATO ETF)</div><div class="rtrack"><div class="rfill mid" data-width="45"></div></div><div class="rstats"><span class="rdown">−15 till −25%</span><span class="rtrig">Trigger: Fredsavtal</span></div></div>
+  <div class="rcard"><div class="rname">Avanza Zero</div><div class="rtrack"><div class="rfill mid" data-width="50"></div></div><div class="rstats"><span class="rdown">−20 till −30%</span><span class="rtrig">Risk: Sv. recession</span></div></div>
+  <div class="rcard"><div class="rname">Hälsovård (HEAL)</div><div class="rtrack"><div class="rfill low" data-width="30"></div></div><div class="rstats"><span class="rdown">−15 till −20%</span><span class="rtrig">Risk: Prisreglering</span></div></div>
+  <div class="rcard"><div class="rname">Guld (IGLN)</div><div class="rtrack"><div class="rfill high" data-width="65"></div></div><div class="rstats"><span class="rdown">−20 till −30%</span><span class="rtrig">Dyrt · ATH-entry</span></div></div>
+  <div class="rcard"><div class="rname">EM ex-Kina</div><div class="rtrack"><div class="rfill high" data-width="70"></div></div><div class="rstats"><span class="rdown">−25 till −35%</span><span class="rtrig">Risk: Recession</span></div></div>
+  <div class="rcard"><div class="rname">Sparkonto+ (Cash)</div><div class="rtrack"><div class="rfill low" data-width="4"></div></div><div class="rstats"><span class="rdown">0%</span><span class="rtrig">Ingen risk</span></div></div>
+</div>
+
+<!-- WORST CASE -->
+<div class="wc-banner">
+  <span class="wc-icon">🔴</span>
+  <div>
+    <div class="wc-label">Worst case — hela portföljen</div>
+    <div class="wc-text">Om kriget eskalerar maximalt och stagflationen slår till: <strong>−25 till −35%</strong> total portföljnedgång — ungefär 12 500–17 500 kr på pappret. Det är inom din uttalade tolerans. <em>Sälj ingenting. Håll fast. Vänta ut det.</em></div>
+  </div>
+</div>
+
+<!-- ░░░ MONTHLY ░░░ -->
+<div class="stitle">Månadsinsats — 1 000 kr/månad</div>
+<div class="monthly">
+  <div>
+    <div class="m-total">1 000 kr</div>
+    <div class="m-label">per månad · automatsparande</div>
+    <div class="m-note">Sätt upp automatsparande på Avanza.<br>Enkelt, konsekvent, inget att tänka på.<br><span>Tid i marknaden > timing av marknaden.</span></div>
+  </div>
+  <div class="m-split">
+    <div class="ms">
+      <div class="ms-name">Varje månad — automatiskt</div>
+      <div class="ms-amt">600 kr</div>
+      <div class="ms-note">→ Avanza Global (sätt upp autogiro)</div>
+    </div>
+    <div class="ms">
+      <div class="ms-name">Varje kvartal — manuellt</div>
+      <div class="ms-amt">400 kr × 3</div>
+      <div class="ms-note">→ Köp den position som fallit mest</div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ RULES ░░░ -->
+<div class="stitle">Rebalanseringsregler</div>
+<div class="rules">
+  <div class="rule"><div class="rule-icon">📐</div><div class="rule-title">20%-regeln</div><div class="rule-desc">Om en position växer till <strong>&gt;20% av portföljen</strong> — sälj ned till målvikt. På ISK är det skattefritt.</div></div>
+  <div class="rule"><div class="rule-icon">📅</div><div class="rule-title">Årsvis rebalansering</div><div class="rule-desc">En gång om året, helst <strong>december/januari</strong>. Justera alla positioner till målvikterna.</div></div>
+  <div class="rule"><div class="rule-icon">🕊</div><div class="rule-title">Vapenstillestånd-plan</div><div class="rule-desc">Om fredsavtal: <strong>Sälj halva energi-positionen</strong>, flytta till Avanza Global. Olja kan falla 30% på en dag.</div></div>
+  <div class="rule"><div class="rule-icon">📉</div><div class="rule-title">Energi-dipplan</div><div class="rule-desc">Om energi-ETF faller <strong>&gt;40% från topp</strong> och kriget är intakt — köp mer. Tillfällig nedgång.</div></div>
+  <div class="rule"><div class="rule-icon">🥇</div><div class="rule-title">Guld-tak</div><div class="rule-desc">Om guld överstiger <strong>15% av portföljvärde</strong> — sälj av överskottet till Avanza Global.</div></div>
+  <div class="rule"><div class="rule-icon">🛑</div><div class="rule-title">Panik-regeln</div><div class="rule-desc"><strong>Sälj aldrig i panik.</strong> Nedgångar är tillfälliga. Portföljvärde 2031 är det som räknas.</div></div>
+</div>
+
+<!-- ░░░ TABLE ░░░ -->
+<div class="stitle">Sammanfattning</div>
+<div class="tbl-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Vikt</th>
+        <th>Belopp</th>
+        <th>Konto</th>
+        <th>Tranche</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="tdot" style="background:#22c55e"></span>Avanza Global</td>
+        <td><span style="font-family:'DM Mono',monospace;color:#86efac">30%</span></td>
+        <td><span class="mono">15 000 kr</span></td>
+        <td><span style="background:#14532d;color:#86efac;font-size:10px;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace">ISK</span></td>
+        <td style="text-align:left"><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--amber)">1 + månadsinsats</span></td>
+      </tr>
+      <tr>
+        <td><span class="tdot" style="background:#ef4444"></span>iShares IOGP (Energi)</td>
+        <td><span style="font-family:'DM Mono',monospace;color:#fca5a5">15%</span></td>
+        <td><span class="mono">7 500 kr</span></td>
+        <td><span style="background:#14532d;color:#86efac;font-size:10px;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace">ISK</span></td>
+        <td style="text-align:left"><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--amber)">2</span></td>
+      </tr>
+      <tr>
+        <td><span class="tdot" style="background:#60a5fa"></span>HANetf NATO (Försvar)</td>
+        <td><span style="font-family:'DM Mono',monospace;color:#93c5fd">12%</span></td>
+        <td><span class="mono">6 000 kr</span></td>
+        <td><span style="background:#14532d;color:#86efac;font-size:10px;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace">ISK</span></td>
+        <td style="text-align:left"><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--amber)">2</span></td>
+      </tr>
+      <tr>
+        <td><span class="tdot" style="background:#f59e0b"></span>Avanza Zero (Sverige)</td>
+        <td><span style="font-family:'DM Mono',monospace;color:#fcd34d">10%</span></td>
+        <td><span class="mono">5 000 kr</span></td>
+        <td><span style="background:#14532d;color:#86efac;font-size:10px;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace">ISK</span></td>
+        <td style="text-align:left"><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--amber)">3</span></td>
+      </tr>
+      <tr>
+        <td><span class="tdot" style="background:#a855f7"></span>iShares HEAL (Hälsovård)</td>
+        <td><span style="font-family:'DM Mono',monospace;color:#d8b4fe">10%</span></td>
+        <td><span class="mono">5 000 kr</span></td>
+        <td><span style="background:#14532d;color:#86efac;font-size:10px;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace">ISK</span></td>
+        <td style="text-align:left"><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--amber)">3</span></td>
+      </tr>
+      <tr>
+        <td><span class="tdot" style="background:#fbbf24"></span>iShares IGLN (Guld)</td>
+        <td><span style="font-family:'DM Mono',monospace;color:#fde68a">8%</span></td>
+        <td><span class="mono">4 000 kr</span></td>
+        <td><span style="background:#14532d;color:#86efac;font-size:10px;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace">ISK</span></td>
+        <td style="text-align:left"><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--amber)">4</span></td>
+      </tr>
+      <tr>
+        <td><span class="tdot" style="background:#22d3ee"></span>Amundi EM ex-Kina</td>
+        <td><span style="font-family:'DM Mono',monospace;color:#a5f3fc">5%</span></td>
+        <td><span class="mono">2 500 kr</span></td>
+        <td><span style="background:#14532d;color:#86efac;font-size:10px;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace">ISK</span></td>
+        <td style="text-align:left"><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--amber)">4</span></td>
+      </tr>
+      <tr>
+        <td><span class="tdot" style="background:#64748b"></span>Sparkonto+ (Cash)</td>
+        <td><span style="font-family:'DM Mono',monospace;color:#94a3b8">10%</span></td>
+        <td><span class="mono">5 000 kr</span></td>
+        <td><span style="background:#14532d;color:#86efac;font-size:10px;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace">ISK</span></td>
+        <td style="text-align:left"><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--amber)">1 (direkt)</span></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>Totalt</td>
+        <td><span style="font-family:'DM Mono',monospace;color:#fff;font-size:14px">100%</span></td>
+        <td><span style="font-family:'DM Mono',monospace;color:var(--gold);font-size:14px">50 000 kr</span></td>
+        <td></td><td></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<!-- ░░░ FOOTER ░░░ -->
+<div class="footer">
+  ⚠ Detta är analys och informationsunderlag — inte licensierad finansiell rådgivning. Du fattar det slutgiltiga beslutet.<br>
+  Verifiera att alla ETF:er finns på Avanza.se innan köp. Data baserad på 2–4 april 2026.<br>
+  Källor: J.P. Morgan · Goldman Sachs · Yale Budget Lab · Moodys · BCA Research · Al Jazeera · Morgan Stanley · Oxford Economics · CNBC · NBC News
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+  // Animate risk bars on scroll into view
+  const fills = document.querySelectorAll('.rfill[data-width]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const delay = Array.from(fills).indexOf(el) * 90;
+        setTimeout(() => { el.style.width = el.dataset.width + '%'; }, delay);
+        io.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+  fills.forEach(f => io.observe(f));
+</script>
+</body>
+</html>
